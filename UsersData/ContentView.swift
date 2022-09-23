@@ -22,7 +22,7 @@ struct ContentView: View {
             DisclosureGroup {
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Language: \(user.lang)")
-                    Text("Os: \(user.id)")
+                    Text("Os: \(user.os)")
                     Text("Played Demo: \(user.playedDemoText)")
                 }
             } label: {
