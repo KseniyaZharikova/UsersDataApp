@@ -8,9 +8,29 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var viewModel = ViewModel()
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView {
+            userView
+         .navigationTitle("Users")
+        }
+    }
+    
+    var userView: some View {
+        List(viewModel.users, id:\.id) { user in
+            DisclosureGroup {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Language: \(user.lang)")
+                    Text("Os: \(user.id)")
+                    Text("Played Demo: \(user.playedDemoText)")
+                }
+            } label: {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Id: \(user.id)")
+                }
+            }
+        }
     }
 }
 

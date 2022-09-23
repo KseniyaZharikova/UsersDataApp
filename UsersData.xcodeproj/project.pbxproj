@@ -14,6 +14,8 @@
 		1833BA9828DDA01B002E1B9A /* UsersDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1833BA9728DDA01B002E1B9A /* UsersDataTests.swift */; };
 		1833BAA228DDA01B002E1B9A /* UsersDataUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1833BAA128DDA01B002E1B9A /* UsersDataUITests.swift */; };
 		1833BAA428DDA01B002E1B9A /* UsersDataUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1833BAA328DDA01B002E1B9A /* UsersDataUITestsLaunchTests.swift */; };
+		1833BAB128DDA299002E1B9A /* ContentView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1833BAB028DDA299002E1B9A /* ContentView-ViewModel.swift */; };
+		1833BAB328DDA510002E1B9A /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1833BAB228DDA510002E1B9A /* UserModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,8 @@
 		1833BA9D28DDA01B002E1B9A /* UsersDataUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UsersDataUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1833BAA128DDA01B002E1B9A /* UsersDataUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersDataUITests.swift; sourceTree = "<group>"; };
 		1833BAA328DDA01B002E1B9A /* UsersDataUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersDataUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		1833BAB028DDA299002E1B9A /* ContentView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView-ViewModel.swift"; sourceTree = "<group>"; };
+		1833BAB228DDA510002E1B9A /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,7 +99,9 @@
 			isa = PBXGroup;
 			children = (
 				1833BA8628DDA016002E1B9A /* UsersDataApp.swift */,
+				1833BAB228DDA510002E1B9A /* UserModel.swift */,
 				1833BA8828DDA016002E1B9A /* ContentView.swift */,
+				1833BAB028DDA299002E1B9A /* ContentView-ViewModel.swift */,
 				1833BA8A28DDA01A002E1B9A /* Assets.xcassets */,
 				1833BA8C28DDA01A002E1B9A /* Preview Content */,
 			);
@@ -258,6 +264,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1833BA8928DDA016002E1B9A /* ContentView.swift in Sources */,
+				1833BAB128DDA299002E1B9A /* ContentView-ViewModel.swift in Sources */,
+				1833BAB328DDA510002E1B9A /* UserModel.swift in Sources */,
 				1833BA8728DDA016002E1B9A /* UsersDataApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
