@@ -25,7 +25,7 @@ extension Users {
         }
         
         var userView: some View {
-            List(viewModel.users, id:\.id) { user in
+            List(viewModel.users, id: \.id) { user in
                 DisclosureGroup {
                     VStack(alignment: .leading, spacing: 10) {
                         Text(user.langText)
