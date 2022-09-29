@@ -17,7 +17,7 @@ extension Users  {
         init() {}
         
         func getUsers() async throws -> [User] {
-            guard let url = URL(string: "https://jsonplaceholder.typicode.com/users") else {
+            guard let url = URL(string: "https://project-vostok-analytics.herokuapp.com/users/all") else {
                 fatalError("Invalid URL")
             }
             let (data, _) = try await URLSession.shared.data(from: url)

@@ -8,25 +8,25 @@
 import Foundation
 
 struct User: Identifiable, Decodable {
-    var id: Int
-    var name: String
-    //    var lang: String
-    //    var os: String
-    //    var playedDemo: Bool
-    //
-    //    var idText: String {
-    //        return "Id: \(id)"
-    //    }
-    //
-    //    var playedDemoText: String {
-    //        return playedDemo ? "Played Demo: Yes" : "Played Demo: No"
-    //    }
-    //
-    //    var langText: String {
-    //        return "Language: \(lang)"
-    //    }
-    //
-    //    var osText: String {
-    //        return "Os: \(os)"
-    //    }
+    let id: String
+    let language: String // russian, english
+    let os: String // macos, window, linux, ios, android
+    let hasPlayedDemo: Bool
+    let firstLaunchDate: Double // timestamp
+    
+    var idText: String {
+        return "ID: \(id)"
+    }
+    
+    var playedDemoText: String {
+        return hasPlayedDemo ? "Played Demo: Yes" : "Played Demo: No"
+    }
+    
+    var langText: String {
+        return "Language: \(language)"
+    }
+    
+    var osText: String {
+        return "OS: \(os)"
+    }
 }
