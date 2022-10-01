@@ -28,13 +28,14 @@ extension Users {
             List(viewModel.users, id: \.id) { user in
                 DisclosureGroup {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text(user.langText)
-                        Text(user.osText)
-                        Text(user.playedDemoText)
+                        Text("**Language:** \(user.language)")
+                        Text("**OS:** \(user.os)")
+                        Text("**Played Demo:** \(user.playedDemoText)")
+                        Text("**First Launch Date:** \(user.firstLaunchDateText)")
                     }
                 } label: {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text(user.idText)
+                        Text("**ID:** \(user.id)")
                     }
                 }
             }.overlay {
@@ -49,5 +50,21 @@ extension Users {
                 }
             }
         }
+    }
+}
+
+private extension User {
+    var playedDemoText: String {
+        hasPlayedDemo ? "Yes" : "No"
+    }
+
+    var firstLaunchDateText:String {
+        let date = Date(timeIntervalSince1970: firstLaunchDate)
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .short
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeZone = .current
+        let strDate = dateFormatter.string(from: date)
+        return strDate
     }
 }
