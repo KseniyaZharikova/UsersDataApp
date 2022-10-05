@@ -11,7 +11,6 @@ import SwiftUI
 extension Users {
     struct Screen: View {
         @ObservedObject private var viewModel: ViewModel
-        @State private var isAnimating: Bool = true
         
         init(viewModel: ViewModel) {
             self.viewModel = viewModel
@@ -21,6 +20,12 @@ extension Users {
             NavigationView {
                 userView
                     .navigationTitle("Users")
+            }.alert(viewModel.error, isPresented: $viewModel.isPresented) {
+                Button("Retry", role: .cancel, action: {
+                    Task {
+                        await viewModel.getUsers()
+                    }
+                })
             }
         }
         
@@ -38,16 +43,12 @@ extension Users {
                         Text("**ID:** \(user.id)")
                     }
                 }
-            }.overlay {
-                ActivityIndicator(isAnimating: .constant(isAnimating), style: .large)
+            }
+            .overlay {
+                ActivityIndicator(isAnimating: $viewModel.isAnimating, style: .large)
             }
             .task {
-                do {
-                    viewModel.users = try await viewModel.getUsers()
-                    isAnimating = false
-                } catch {
-                    print("Error", error)
-                }
+                await viewModel.getUsers()
             }
         }
     }
@@ -57,7 +58,7 @@ private extension User {
     var playedDemoText: String {
         hasPlayedDemo ? "Yes" : "No"
     }
-
+    
     var firstLaunchDateText:String {
         let date = Date(timeIntervalSince1970: firstLaunchDate)
         let dateFormatter = DateFormatter()

@@ -12,17 +12,32 @@ enum Users {}
 
 extension Users  {
     @MainActor class ViewModel: ObservableObject {
+        var service: UserService?
+        
         @Published var users: [User] = []
+        @Published var error: String = ""
         
-        init() {}
+        @Published var isAnimating: Bool = false
+        @Published var isPresented: Bool = false
         
-        func getUsers() async throws -> [User] {
-            guard let url = URL(string: "https://project-vostok-analytics.herokuapp.com/users/all") else {
-                fatalError("Invalid URL")
-            }
-            let (data, _) = try await URLSession.shared.data(from: url)
-            let users = try JSONDecoder().decode([User].self, from: data)
-            return users
+        init(service:UserService = .init()) {
+            self.service = service
+        }
+        
+        func getUsers() async {
+            self.isAnimating = true
+            await service?.getUsers(path: "users/all", { result in
+                DispatchQueue.main.async {
+                    self.isAnimating = false
+                    switch result {
+                    case .success(let users):
+                        self.users = users
+                    case .failure(let error):
+                        self.error = error.localizedDescription
+                        self.isPresented = true
+                    }
+                }
+            })
         }
     }
 }

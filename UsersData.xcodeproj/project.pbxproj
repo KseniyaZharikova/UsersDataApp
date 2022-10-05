@@ -17,6 +17,8 @@
 		1833BAB328DDA510002E1B9A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1833BAB228DDA510002E1B9A /* User.swift */; };
 		184D37A328E5691E00B7DAFC /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184D37A228E5691E00B7DAFC /* ActivityIndicator.swift */; };
 		1888C94E28E4879200CAD302 /* gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 1888C94D28E4879200CAD302 /* gitignore */; };
+		18E8263428ED5F3A00154FF2 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E8263328ED5F3A00154FF2 /* UserService.swift */; };
+		18E8263728ED717900154FF2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E8263628ED717900154FF2 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,8 @@
 		1833BAB228DDA510002E1B9A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		184D37A228E5691E00B7DAFC /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		1888C94D28E4879200CAD302 /* gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gitignore; sourceTree = "<group>"; };
+		18E8263328ED5F3A00154FF2 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		18E8263628ED717900154FF2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +122,7 @@
 		1833BA8528DDA016002E1B9A /* UsersData */ = {
 			isa = PBXGroup;
 			children = (
+				18E8263228ED5F2500154FF2 /* Network */,
 				184D37A128E568FC00B7DAFC /* Common */,
 				1824485F28E2E9DE008A3F29 /* App */,
 				1824485C28E2D96C008A3F29 /* Users */,
@@ -147,6 +152,7 @@
 		184D37A128E568FC00B7DAFC /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				18E8263528ED714800154FF2 /* Constants */,
 				184D37A428E5693800B7DAFC /* View */,
 			);
 			path = Common;
@@ -158,6 +164,22 @@
 				184D37A228E5691E00B7DAFC /* ActivityIndicator.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		18E8263228ED5F2500154FF2 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				18E8263328ED5F3A00154FF2 /* UserService.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		18E8263528ED714800154FF2 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				18E8263628ED717900154FF2 /* Constants.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,10 +313,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18E8263428ED5F3A00154FF2 /* UserService.swift in Sources */,
 				1824485E28E2D997008A3F29 /* Screen.swift in Sources */,
 				1833BA8928DDA016002E1B9A /* ContentView.swift in Sources */,
 				1833BAB128DDA299002E1B9A /* ViewModel.swift in Sources */,
 				1833BAB328DDA510002E1B9A /* User.swift in Sources */,
+				18E8263728ED717900154FF2 /* Constants.swift in Sources */,
 				184D37A328E5691E00B7DAFC /* ActivityIndicator.swift in Sources */,
 				1833BA8728DDA016002E1B9A /* UsersDataApp.swift in Sources */,
 			);
