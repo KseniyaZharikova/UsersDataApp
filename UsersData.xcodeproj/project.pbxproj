@@ -15,6 +15,8 @@
 		1833BA9828DDA01B002E1B9A /* UsersDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1833BA9728DDA01B002E1B9A /* UsersDataTests.swift */; };
 		1833BAB128DDA299002E1B9A /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1833BAB028DDA299002E1B9A /* ViewModel.swift */; };
 		1833BAB328DDA510002E1B9A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1833BAB228DDA510002E1B9A /* User.swift */; };
+		18360B0028F7423100E4B6F5 /* Data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 18360AFE28F7423100E4B6F5 /* Data.xcdatamodeld */; };
+		18360B0228F7474A00E4B6F5 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18360B0128F7474A00E4B6F5 /* DataController.swift */; };
 		184D37A328E5691E00B7DAFC /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184D37A228E5691E00B7DAFC /* ActivityIndicator.swift */; };
 		1888C94E28E4879200CAD302 /* gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 1888C94D28E4879200CAD302 /* gitignore */; };
 		18E8263428ED5F3A00154FF2 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E8263328ED5F3A00154FF2 /* UserService.swift */; };
@@ -50,6 +52,8 @@
 		1833BA9D28DDA01B002E1B9A /* UsersDataUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UsersDataUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1833BAB028DDA299002E1B9A /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		1833BAB228DDA510002E1B9A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		18360AFF28F7423100E4B6F5 /* UserDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UserDataModel.xcdatamodel; sourceTree = "<group>"; };
+		18360B0128F7474A00E4B6F5 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		184D37A228E5691E00B7DAFC /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		1888C94D28E4879200CAD302 /* gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gitignore; sourceTree = "<group>"; };
 		18E8263328ED5F3A00154FF2 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
@@ -87,6 +91,8 @@
 				1833BAB028DDA299002E1B9A /* ViewModel.swift */,
 				1833BAB228DDA510002E1B9A /* User.swift */,
 				1824485D28E2D997008A3F29 /* Screen.swift */,
+				18360AFE28F7423100E4B6F5 /* Data.xcdatamodeld */,
+				18360B0128F7474A00E4B6F5 /* DataController.swift */,
 			);
 			path = Users;
 			sourceTree = "<group>";
@@ -318,7 +324,9 @@
 				1833BA8928DDA016002E1B9A /* ContentView.swift in Sources */,
 				1833BAB128DDA299002E1B9A /* ViewModel.swift in Sources */,
 				1833BAB328DDA510002E1B9A /* User.swift in Sources */,
+				18360B0228F7474A00E4B6F5 /* DataController.swift in Sources */,
 				18E8263728ED717900154FF2 /* Constants.swift in Sources */,
+				18360B0028F7423100E4B6F5 /* Data.xcdatamodeld in Sources */,
 				184D37A328E5691E00B7DAFC /* ActivityIndicator.swift in Sources */,
 				1833BA8728DDA016002E1B9A /* UsersDataApp.swift in Sources */,
 			);
@@ -643,6 +651,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		18360AFE28F7423100E4B6F5 /* Data.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				18360AFF28F7423100E4B6F5 /* UserDataModel.xcdatamodel */,
+			);
+			currentVersion = 18360AFF28F7423100E4B6F5 /* UserDataModel.xcdatamodel */;
+			path = Data.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1833BA7B28DDA016002E1B9A /* Project object */;
 }

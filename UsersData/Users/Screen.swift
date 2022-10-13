@@ -11,6 +11,7 @@ import SwiftUI
 extension Users {
     struct Screen: View {
         @ObservedObject private var viewModel: ViewModel
+        @Environment(\.managedObjectContext) var context
         
         init(viewModel: ViewModel) {
             self.viewModel = viewModel
@@ -23,7 +24,7 @@ extension Users {
             }.alert(viewModel.error, isPresented: $viewModel.isPresented) {
                 Button("Retry", role: .cancel, action: {
                     Task {
-                        await viewModel.getUsers()
+                        await viewModel.getUsers(context: context)
                     }
                 })
             }
@@ -33,14 +34,14 @@ extension Users {
             List(viewModel.users, id: \.id) { user in
                 DisclosureGroup {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("**Language:** \(user.language)")
-                        Text("**OS:** \(user.os)")
+                        Text("**Language:** \(user.language ?? "")")
+                        Text("**OS:** \(user.os ?? "")")
                         Text("**Played Demo:** \(user.playedDemoText)")
                         Text("**First Launch Date:** \(user.firstLaunchDateText)")
                     }
                 } label: {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("**ID:** \(user.id)")
+                        Text("**ID:** \(user.id ?? "")")
                     }
                 }
             }
@@ -48,13 +49,13 @@ extension Users {
                 ActivityIndicator(isAnimating: $viewModel.isAnimating, style: .large)
             }
             .task {
-                await viewModel.getUsers()
+                await viewModel.getUsers(context: context)
             }
         }
     }
 }
 
-private extension User {
+private extension UserData {
     var playedDemoText: String {
         hasPlayedDemo ? "Yes" : "No"
     }
