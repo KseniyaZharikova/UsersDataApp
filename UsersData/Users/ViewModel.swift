@@ -13,7 +13,9 @@ enum Users {}
 
 extension Users  {
     @MainActor class ViewModel: ObservableObject {
-        @FetchRequest(sortDescriptors: []) var users: FetchedResults<UserData>
+        
+        @FetchRequest(sortDescriptors: []) private var cachedUsers: FetchedResults<UserData>
+        @Published var users: [User] = []
         
         var service: UserService?
         
@@ -31,17 +33,27 @@ extension Users  {
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let users):
-                        self.saveData(users: users, context: context)
+                        self.users = users
                         self.isAnimating = false
+                        self.saveData(users: users, context: context)
                     case .failure(let error):
                         self.error = error.localizedDescription
+                        self.users = self.getCachedUsers()
                         self.isPresented = true
                     }
                 }
             })
         }
         
-        func saveData(users: [User] , context: NSManagedObjectContext) {
+        private func getCachedUsers () -> [User] {
+            return cachedUsers.compactMap({ User(id: $0.id ?? "",
+                                                 language: $0.language ?? "",
+                                                 os: $0.os ?? "",
+                                                 hasPlayedDemo: $0.hasPlayedDemo,
+                                                 firstLaunchDate: $0.firstLaunchDate)})
+        }
+        
+        private func saveData(users: [User] , context: NSManagedObjectContext) {
             for user in users {
                 let entity = UserData(context: context)
                 entity.id = user.id
