@@ -12,6 +12,7 @@ extension Users {
     struct Screen: View {
         @ObservedObject private var viewModel: ViewModel
         @Environment(\.managedObjectContext) var context
+        @FetchRequest(sortDescriptors: []) private var cachedUsers: FetchedResults<UserData>
         
         init(viewModel: ViewModel) {
             self.viewModel = viewModel
@@ -31,17 +32,17 @@ extension Users {
         }
         
         var userView: some View {
-            List(viewModel.users, id: \.id) { user in
+            List(cachedUsers, id: \.id) { user in
                 DisclosureGroup {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("**Language:** \(user.language)")
-                        Text("**OS:** \(user.os)")
+                        Text("**Language:** \(user.language ?? "")")
+                        Text("**OS:** \(user.os ?? "")")
                         Text("**Played Demo:** \(user.playedDemoText)")
                         Text("**First Launch Date:** \(user.firstLaunchDateText)")
                     }
                 } label: {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("**ID:** \(user.id)")
+                        Text("**ID:** \(user.id ?? "")")
                     }
                 }
             }
@@ -55,7 +56,7 @@ extension Users {
     }
 }
 
-private extension User {
+private extension UserData {
     var playedDemoText: String {
         hasPlayedDemo ? "Yes" : "No"
     }
