@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct User: Identifiable, Decodable {
+struct UserResponse: Identifiable, Decodable {
     let id: String
     let language: String // russian, english
     let os: String // macos, window, linux, ios, android

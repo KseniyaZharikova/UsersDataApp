@@ -10,9 +10,10 @@ import SwiftUI
 
 extension Users {
     struct Screen: View {
+
         @ObservedObject private var viewModel: ViewModel
         @Environment(\.managedObjectContext) var context
-        @FetchRequest(sortDescriptors: []) private var cachedUsers: FetchedResults<UserData>
+        @FetchRequest(sortDescriptors: []) private var cachedUsers: FetchedResults<User>
         
         init(viewModel: ViewModel) {
             self.viewModel = viewModel
@@ -22,12 +23,24 @@ extension Users {
             NavigationView {
                 userView
                     .navigationTitle("Users")
-            }.alert(viewModel.error, isPresented: $viewModel.isPresented) {
-                Button("Retry", role: .cancel, action: {
-                    Task {
-                        await viewModel.getUsers(context: context)
+                    .toolbar {
+                        ToolbarItem(placement:  .navigationBarTrailing) {
+                            Button  {
+                                Task {
+                                    cachedUsers.forEach { (user) in
+                                        context.delete(user)
+                                    }
+                                    try context.save()
+                                    await viewModel.getUsers(context: context)
+                                }
+                            } label: {
+                                Image(systemName: "arrow.clockwise.circle")
+                                    .font(.headline)
+                            }
+                        }
                     }
-                })
+            }.alert(viewModel.error, isPresented: $viewModel.isPresented) {
+                Button("OK", role: .cancel, action: {})
             }
         }
         
@@ -50,13 +63,15 @@ extension Users {
                 ActivityIndicator(isAnimating: $viewModel.isAnimating, style: .large)
             }
             .task {
-                await viewModel.getUsers(context: context)
+                if cachedUsers.isEmpty {
+                    await viewModel.getUsers(context: context)
+                }
             }
         }
     }
 }
 
-private extension UserData {
+private extension User {
     var playedDemoText: String {
         hasPlayedDemo ? "Yes" : "No"
     }

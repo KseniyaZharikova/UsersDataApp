@@ -27,6 +27,7 @@ extension Users  {
             self.isAnimating = true
             await service?.getUsers(path: "users/all", { result in
                 DispatchQueue.main.async {
+                    self.isAnimating = false
                     switch result {
                     case .success(let users):
                         self.isAnimating = false
@@ -39,9 +40,9 @@ extension Users  {
             })
         }
         
-        private func saveData(users: [User] , context: NSManagedObjectContext) {
+        private func saveData(users: [UserResponse] , context: NSManagedObjectContext) {
             for user in users {
-                let entity = UserData(context: context)
+                let entity = User(context: context)
                 entity.id = user.id
                 entity.language = user.language
                 entity.os = user.os
