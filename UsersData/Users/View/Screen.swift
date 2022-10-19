@@ -7,16 +7,19 @@
 
 import Foundation
 import SwiftUI
+import UserNotifications
 
 extension Users {
     struct Screen: View {
-
+        
         @ObservedObject private var viewModel: ViewModel
         @Environment(\.managedObjectContext) var context
         @FetchRequest(sortDescriptors: []) private var cachedUsers: FetchedResults<User>
         
         init(viewModel: ViewModel) {
             self.viewModel = viewModel
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.sound]) { _, _ in }
+            UNUserNotificationCenter.current().add(viewModel.getUNNotificationRequest())
         }
         
         var body: some View {

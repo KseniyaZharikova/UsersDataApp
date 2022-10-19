@@ -51,5 +51,15 @@ extension Users  {
             }
             try? context.save()
         }
+        
+        func getUNNotificationRequest()-> UNNotificationRequest {
+            let content = UNMutableNotificationContent()
+            content.title = "You can update users"
+            content.subtitle = "Just tap on reload buuton"
+            content.sound = UNNotificationSound.default
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 15, repeats: false)
+            let request = UNNotificationRequest(identifier: UUID().uuidString , content: content, trigger: trigger)
+            return request
+        }
     }
 }
