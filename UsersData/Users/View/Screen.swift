@@ -79,7 +79,7 @@ private extension User {
         hasPlayedDemo ? "Yes" : "No"
     }
     
-    var firstLaunchDateText:String {
+    var firstLaunchDateText: String {
         let date = Date(timeIntervalSince1970: firstLaunchDate)
         let dateFormatter = DateFormatter()
         dateFormatter.timeStyle = .short

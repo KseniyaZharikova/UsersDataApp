@@ -13,7 +13,7 @@ struct UsersDataApp: App {
     
     var body: some Scene {
         WindowGroup {
-            Users.Screen(viewModel: .init())
+            Users.Screen(viewModel: .init(service: .init()))
                 .environment(\.managedObjectContext,persistenceController.container.viewContext)
         }
     }

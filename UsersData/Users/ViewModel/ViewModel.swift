@@ -19,25 +19,24 @@ extension Users  {
         @Published var isAnimating: Bool = false
         @Published var isPresented: Bool = false
         
-        init(service:UserService = .init()) {
+        init(service: UserService) {
             self.service = service
         }
         
         func getUsers(context: NSManagedObjectContext) async {
-            self.isAnimating = true
-            await service?.getUsers(path: "users/all", { result in
-                DispatchQueue.main.async {
-                    self.isAnimating = false
+            isAnimating = true
+            await service?.getUsers(path: "users/all") { result in
+                DispatchQueue.main.async { [weak self] in
+                    self?.isAnimating = false
                     switch result {
                     case .success(let users):
-                        self.isAnimating = false
-                        self.saveData(users: users, context: context)
+                        self?.saveData(users: users, context: context)
                     case .failure(let error):
-                        self.error = error.localizedDescription
-                        self.isPresented = true
+                        self?.error = error.localizedDescription
+                        self?.isPresented = true
                     }
                 }
-            })
+            }
         }
         
         private func saveData(users: [UserResponse] , context: NSManagedObjectContext) {
@@ -52,7 +51,7 @@ extension Users  {
             try? context.save()
         }
         
-        func getUNNotificationRequest()-> UNNotificationRequest {
+        func getUNNotificationRequest() -> UNNotificationRequest {
             let content = UNMutableNotificationContent()
             content.title = "You can update users"
             content.subtitle = "Just tap on reload buuton"
