@@ -16,37 +16,42 @@ extension Users  {
         var service: UserService?
         
         @Published var error: String = ""
-        @Published var isAnimating: Bool = false
-        @Published var isPresented: Bool = false
+        @Published var isLoading: Bool = false
+        @Published var errorIsPresented: Bool = false
         
         init(service: UserService) {
             self.service = service
         }
         
-        func getUsers(context: NSManagedObjectContext) async {
-            isAnimating = true
+        func getUsers(cachedUsers: FetchedResults<User>?,context: NSManagedObjectContext) async {
+            isLoading = true
             await service?.getUsers(path: "users/all") { result in
                 DispatchQueue.main.async { [weak self] in
-                    self?.isAnimating = false
+                    self?.isLoading = false
                     switch result {
                     case .success(let users):
-                        self?.saveData(users: users, context: context)
+                        self?.deleteCachedUsers(cachedUsers: cachedUsers, context: context)
+                        self?.saveNewUsers(users: users, context: context)
                     case .failure(let error):
                         self?.error = error.localizedDescription
-                        self?.isPresented = true
+                        self?.errorIsPresented = true
                     }
                 }
             }
         }
         
-        private func saveData(users: [UserResponse] , context: NSManagedObjectContext) {
-            for user in users {
-                let entity = User(context: context)
-                entity.id = user.id
-                entity.language = user.language
-                entity.os = user.os
-                entity.language = user.language
-                entity.hasPlayedDemo = user.hasPlayedDemo
+        private func deleteCachedUsers(cachedUsers: FetchedResults<User>?, context: NSManagedObjectContext) {
+            guard let cachedUsers = cachedUsers else { return }
+            
+            cachedUsers.forEach { (user) in
+                context.delete(user)
+            }
+            try? context.save()
+        }
+        
+        private func saveNewUsers(users: [UserResponse], context: NSManagedObjectContext) {
+            users.forEach { user in
+                user.save(context: context)
             }
             try? context.save()
         }
