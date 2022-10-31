@@ -21,6 +21,8 @@
 		1888C94E28E4879200CAD302 /* gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 1888C94D28E4879200CAD302 /* gitignore */; };
 		18E8263428ED5F3A00154FF2 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E8263328ED5F3A00154FF2 /* UserService.swift */; };
 		18E8263728ED717900154FF2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E8263628ED717900154FF2 /* Constants.swift */; };
+		18FBC770290C383600B8F451 /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FBC76F290C383600B8F451 /* UserRequest.swift */; };
+		18FBC773291040DC00B8F451 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FBC772291040DC00B8F451 /* UserCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,8 @@
 		1888C94D28E4879200CAD302 /* gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gitignore; sourceTree = "<group>"; };
 		18E8263328ED5F3A00154FF2 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		18E8263628ED717900154FF2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		18FBC76F290C383600B8F451 /* UserRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequest.swift; sourceTree = "<group>"; };
+		18FBC772291040DC00B8F451 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +180,7 @@
 			children = (
 				1862BA4A28FC4A0300B259F9 /* UserData.xcdatamodeld */,
 				1833BAB228DDA510002E1B9A /* UserResponse.swift */,
+				18FBC76F290C383600B8F451 /* UserRequest.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -192,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				1824485D28E2D997008A3F29 /* Screen.swift */,
+				18FBC772291040DC00B8F451 /* UserCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -345,11 +351,13 @@
 			files = (
 				1862BA4C28FC4A0300B259F9 /* UserData.xcdatamodeld in Sources */,
 				18E8263428ED5F3A00154FF2 /* UserService.swift in Sources */,
+				18FBC770290C383600B8F451 /* UserRequest.swift in Sources */,
 				1824485E28E2D997008A3F29 /* Screen.swift in Sources */,
 				1833BA8928DDA016002E1B9A /* ContentView.swift in Sources */,
 				1833BAB128DDA299002E1B9A /* ViewModel.swift in Sources */,
 				1833BAB328DDA510002E1B9A /* UserResponse.swift in Sources */,
 				18360B0228F7474A00E4B6F5 /* PersistenceController.swift in Sources */,
+				18FBC773291040DC00B8F451 /* UserCell.swift in Sources */,
 				18E8263728ED717900154FF2 /* Constants.swift in Sources */,
 				184D37A328E5691E00B7DAFC /* ActivityIndicator.swift in Sources */,
 				1833BA8728DDA016002E1B9A /* UsersDataApp.swift in Sources */,

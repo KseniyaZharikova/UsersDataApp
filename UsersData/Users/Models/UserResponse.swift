@@ -8,6 +8,12 @@
 import Foundation
 import CoreData
 
+struct PaginatedUsersResponse: Decodable {
+    let pageNumber: Int
+    let isLast: Bool
+    let results: [UserResponse]
+}
+
 struct UserResponse: Identifiable, Decodable {
     let id: String
     let language: String // russian, english

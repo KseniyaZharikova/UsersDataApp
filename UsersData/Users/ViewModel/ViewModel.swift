@@ -13,31 +13,73 @@ enum Users {}
 
 extension Users  {
     @MainActor class ViewModel: ObservableObject {
-        var service: UserService?
+        
+        var cachedUsers:FetchedResults<User>?
+        var context:NSManagedObjectContext?
+        let service:NetworkServiceProtocol!
         
         @Published var error: String = ""
         @Published var isLoading: Bool = false
         @Published var errorIsPresented: Bool = false
+        @Published var users: [UserResponse] = []
         
-        init(service: UserService) {
+        var isLast: Bool = false
+        var page = 0
+        var isRefresh = false
+        let amountPerPage = 15
+        
+        init(service: NetworkService) {
             self.service = service
         }
         
-        func getUsers(cachedUsers: FetchedResults<User>?,context: NSManagedObjectContext) async {
+        func getUsersAction(isRefresh: Bool = false, cachedUsers: FetchedResults<User>?,context: NSManagedObjectContext) async {
+            self.isRefresh = isRefresh
+            self.cachedUsers = cachedUsers
+            self.context = context
+            
+            if isRefresh {
+                page = 0
+            }
+            guard !isLast else { return }
+            
+            await getUsers()
+        }
+        
+        func getUsers() async{
             isLoading = true
-            await service?.getUsers(path: "users/all") { result in
-                DispatchQueue.main.async { [weak self] in
-                    self?.isLoading = false
+            let request = UserRequest(page: page, amountPerPage: amountPerPage)
+            await service.request(request) { [weak self] result in
+                guard let self  = self else { return }
+                DispatchQueue.main.async {
+                    self.isLoading = false
                     switch result {
-                    case .success(let users):
-                        self?.deleteCachedUsers(cachedUsers: cachedUsers, context: context)
-                        self?.saveNewUsers(users: users, context: context)
+                    case .success(let reponse):
+                        self.updateUserList(reponse: reponse)
+                        self.updateCachedUsers(reponse: reponse)
                     case .failure(let error):
-                        self?.error = error.localizedDescription
-                        self?.errorIsPresented = true
+                        self.error = error.localizedDescription
+                        self.errorIsPresented = true
                     }
                 }
             }
+        }
+        
+        func updateUserList(reponse: PaginatedUsersResponse) {
+            if isRefresh {
+                self.users.removeAll()
+            }
+            self.users.append(contentsOf: reponse.results)
+            self.isLast = reponse.isLast
+            self.page += 1
+        }
+        
+        func updateCachedUsers(reponse: PaginatedUsersResponse) {
+            guard let context = context else { return }
+            
+            if isRefresh {
+                deleteCachedUsers(cachedUsers: cachedUsers, context: context)
+            }
+            saveNewUsers(users: reponse.results, context: context)
         }
         
         private func deleteCachedUsers(cachedUsers: FetchedResults<User>?, context: NSManagedObjectContext) {
@@ -58,8 +100,8 @@ extension Users  {
         
         func getUNNotificationRequest() -> UNNotificationRequest {
             let content = UNMutableNotificationContent()
-            content.title = "You can update users"
-            content.subtitle = "Just tap on reload buuton"
+            content.title = "Application works even without internet"
+            content.subtitle = "We store data that has already been uploaded"
             content.sound = UNNotificationSound.default
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 15, repeats: false)
             let request = UNNotificationRequest(identifier: UUID().uuidString , content: content, trigger: trigger)

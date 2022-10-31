@@ -26,65 +26,46 @@ extension Users {
             NavigationView {
                 userView
                     .navigationTitle("Users")
-                    .toolbar {
-                        ToolbarItem(placement:  .navigationBarTrailing) {
-                            Button  {
-                                Task {
-                                    await viewModel.getUsers(cachedUsers: cachedUsers, context: context)
-                                }
-                            } label: {
-                                Image(systemName: "arrow.clockwise.circle")
-                                    .font(.headline)
-                            }
-                        }
-                    }
             }.alert(viewModel.error, isPresented: $viewModel.errorIsPresented) {
                 Button("OK", role: .cancel, action: {})
             }
         }
         
         var userView: some View {
-            HStack {
-                if viewModel.isLoading {
-                    ActivityIndicator(isAnimating: $viewModel.isLoading, style: .large)
-                } else {
-                    List(cachedUsers, id: \.id) { user in
-                        DisclosureGroup {
-                            VStack(alignment: .leading, spacing: 10) {
-                                Text("**Language:** \(user.language ?? "")")
-                                Text("**OS:** \(user.os ?? "")")
-                                Text("**Played Demo:** \(user.playedDemoText)")
-                                Text("**First Launch Date:** \(user.firstLaunchDateText)")
-                            }
-                        } label: {
-                            VStack(alignment: .leading, spacing: 10) {
-                                Text("**ID:** \(user.id ?? "")")
-                            }
-                        }
+            List() {
+                
+                if viewModel.errorIsPresented && viewModel.users.isEmpty {
+                    ForEach(cachedUsers, id: \.id) { user in
+                        UserCell(user: nil,cachedUser: user)
                     }
-                    .task {
-                        if cachedUsers.isEmpty {
-                            await viewModel.getUsers(cachedUsers: nil, context: context)
-                        }
+                } else {
+                    ForEach(viewModel.users, id: \.id) { user in
+                        UserCell(user: user,cachedUser: nil)
                     }
                 }
+                
+                if !viewModel.users.isEmpty {
+                    ActivityIndicator(isAnimating: $viewModel.isLoading, style: .medium)
+                        .onAppear {
+                            Task {
+                                await viewModel.getUsersAction(cachedUsers: cachedUsers, context: context)
+                            }
+                        }
+                }
+            }
+            .overlay {
+                if viewModel.users.isEmpty {
+                    ActivityIndicator(isAnimating: $viewModel.isLoading, style: .large)
+                }
+            }
+            .refreshable {
+                Task {
+                    await viewModel.getUsersAction(isRefresh: true, cachedUsers: cachedUsers, context: context)
+                }
+            }
+            .task {
+                await viewModel.getUsers()
             }
         }
-    }
-}
-
-private extension User {
-    var playedDemoText: String {
-        hasPlayedDemo ? "Yes" : "No"
-    }
-    
-    var firstLaunchDateText: String {
-        let date = Date(timeIntervalSince1970: firstLaunchDate)
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = .short
-        dateFormatter.dateStyle = .short
-        dateFormatter.timeZone = .current
-        let strDate = dateFormatter.string(from: date)
-        return strDate
     }
 }
