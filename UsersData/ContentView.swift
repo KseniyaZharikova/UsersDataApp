@@ -9,6 +9,6 @@ import SwiftUI
 
 struct Users_Previews: PreviewProvider {
     static var previews: some View {
-        Users.Screen(viewModel: .init())
+        Users.Screen(viewModel: .init(service: .init()))
     }
 }
