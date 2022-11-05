@@ -8,6 +8,7 @@
 import Foundation
 
 struct UserRequest: DataRequest {
+    typealias Response = PaginatedUsersResponse
     var page: Int
     var amountPerPage: Int
     
@@ -26,12 +27,9 @@ struct UserRequest: DataRequest {
     }
     
     var queryItems: [String : String] {
-        return ["page": String(page),"amountPerPage": String(amountPerPage)]
-    }
-    
-    func decode(_ data: Data) throws -> PaginatedUsersResponse {
-        let decoder = JSONDecoder()
-        let response = try decoder.decode(PaginatedUsersResponse.self, from: data)
-        return response
+        return [
+            "page": String(page),
+            "amountPerPage": String(amountPerPage)
+        ]
     }
 }

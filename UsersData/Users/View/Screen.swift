@@ -36,11 +36,11 @@ extension Users {
                 
                 if viewModel.errorIsPresented && viewModel.users.isEmpty {
                     ForEach(cachedUsers, id: \.id) { user in
-                        UserCell(user: nil,cachedUser: user)
+                        UserCell(viewModel: .init(user: user))
                     }
                 } else {
                     ForEach(viewModel.users, id: \.id) { user in
-                        UserCell(user: user,cachedUser: nil)
+                        UserCell(viewModel: .init(user: user))
                     }
                 }
                 
