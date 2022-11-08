@@ -10,9 +10,9 @@ import SwiftUI
 import CoreData
 
 struct UserCell: View {
-    var viewModel: UserCellViewModel?
+    private let viewModel: UserCellViewModel
     
-    init(viewModel: UserCellViewModel? = nil) {
+    init(viewModel: UserCellViewModel) {
         self.viewModel = viewModel
     }
     
@@ -34,23 +34,23 @@ struct UserCell: View {
 
 private extension UserCell {
     var id: String {
-        return viewModel?.id ?? ""
+        return viewModel.id ?? ""
     }
     
     var language: String {
-        return viewModel?.language ?? ""
+        return viewModel.language ?? ""
     }
     
     var os: String {
-        return viewModel?.os ?? ""
+        return viewModel.os ?? ""
     }
     
     var playedDemoText: String {
-        return (viewModel?.hasPlayedDemo ?? false) ? "Yes" : "No"
+        return (viewModel.hasPlayedDemo) ? "Yes" : "No"
     }
     
     var firstLaunchDateText: String {
-        let date = Date(timeIntervalSince1970: viewModel?.firstLaunchDate ?? 0)
+        let date = Date(timeIntervalSince1970: viewModel.firstLaunchDate)
         let dateFormatter = DateFormatter()
         dateFormatter.timeStyle = .short
         dateFormatter.dateStyle = .short

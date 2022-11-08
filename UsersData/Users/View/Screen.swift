@@ -60,7 +60,7 @@ extension Users {
             }
             .refreshable {
                 Task {
-                    await viewModel.getUsersAction(isRefresh: true, cachedUsers: cachedUsers, context: context)
+                    await viewModel.getUsersAction(forceRefresh: true, cachedUsers: cachedUsers, context: context)
                 }
             }
             .task {

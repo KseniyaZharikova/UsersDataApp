@@ -14,9 +14,9 @@ enum Users {}
 extension Users  {
     @MainActor class ViewModel: ObservableObject {
         
-        var cachedUsers:FetchedResults<User>?
-        var context:NSManagedObjectContext?
-        let service:NetworkServiceProtocol!
+        var cachedUsers: FetchedResults<User>?
+        var context: NSManagedObjectContext?
+        let service: NetworkServiceProtocol!
         
         @Published var error: String = ""
         @Published var isLoading: Bool = false
@@ -25,19 +25,19 @@ extension Users  {
         
         var isLast: Bool = false
         var page = 0
-        var isRefresh = false
+        var forceRefresh = false
         let amountPerPage = 15
         
         init(service: NetworkService) {
             self.service = service
         }
         
-        func getUsersAction(isRefresh: Bool = false, cachedUsers: FetchedResults<User>?,context: NSManagedObjectContext) async {
-            self.isRefresh = isRefresh
+        func getUsersAction(forceRefresh: Bool = false, cachedUsers: FetchedResults<User>?,context: NSManagedObjectContext) async {
+            self.forceRefresh = forceRefresh
             self.cachedUsers = cachedUsers
             self.context = context
             
-            if isRefresh {
+            if forceRefresh {
                 page = 0
             }
             guard !isLast else { return }
@@ -65,7 +65,7 @@ extension Users  {
         }
         
         func updateUserList(reponse: PaginatedUsersResponse) {
-            if isRefresh {
+            if forceRefresh {
                 self.users.removeAll()
             }
             self.users.append(contentsOf: reponse.results)
@@ -76,7 +76,7 @@ extension Users  {
         func updateCachedUsers(reponse: PaginatedUsersResponse) {
             guard let context = context else { return }
             
-            if isRefresh {
+            if forceRefresh {
                 deleteCachedUsers(cachedUsers: cachedUsers, context: context)
             }
             saveNewUsers(users: reponse.results, context: context)

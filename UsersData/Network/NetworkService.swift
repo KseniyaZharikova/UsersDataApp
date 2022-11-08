@@ -39,13 +39,14 @@ final class NetworkService: NetworkServiceProtocol {
         urlRequest.httpMethod = request.method.rawValue.capitalized
         urlRequest.allHTTPHeaderFields = request.headers
         
-        URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
             if let error = error {
-                return completion(.failure(error))
+                completion(.failure(error))
+                return
             }
             
             guard let response = response as? HTTPURLResponse, 200..<300 ~= response.statusCode else {
-                completion(.failure(AppError.someError))
+                completion(.failure(AppError.unknown))
                 return
             }
             
@@ -70,39 +71,4 @@ enum HTTPMethod: String {
     case put
     case patch
     case delete
-}
-
-enum AppError: Error {
-    case wrongUrl
-    case invalidEndpoint
-    case noData
-    case someError
-}
-
-protocol DataRequest {
-    associatedtype Response
-    
-    var url: String { get }
-    var method: HTTPMethod { get }
-    var headers: [String : String] { get }
-    var queryItems: [String : String] { get }
-    
-    func decode(_ data: Data) throws -> Response
-}
-
-extension DataRequest {
-    var headers: [String : String] {
-        [:]
-    }
-    
-    var queryItems: [URLQueryItem] {
-        []
-    }
-}
-
-extension DataRequest where Response: Decodable {
-    func decode(_ data: Data) throws -> Response {
-        let decoder = JSONDecoder()
-        return try decoder.decode(Response.self, from: data)
-    }
 }
